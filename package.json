@@ -1,0 +1,22 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "description": "MERN shop",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raustime/react-redux-express-shop.git"
+  },
+  "author": "Roman Ustymenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raustime/react-redux-express-shop/issues"
+  },
+  "homepage": "https://github.com/raustime/react-redux-express-shop#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
