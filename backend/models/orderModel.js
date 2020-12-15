@@ -6,7 +6,7 @@ const orderSchema = mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
-    }
+    },
     orderItems:[
         {
             name: {type: String, required: true},
@@ -33,8 +33,8 @@ const orderSchema = mongoose.Schema(
     },
     paymentResult: {
         id: {type: String},
-        status: {type: String}
-        update_time: {type: String}
+        status: {type: String},
+        update_time: {type: String},
         email_address: {type: String}
     },
     taxPrice: {
@@ -77,4 +77,4 @@ const orderSchema = mongoose.Schema(
 
 const Order = mongoose.model('Order', orderSchema)
 
-module.exports = Product
+module.exports = Order
