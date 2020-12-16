@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Col, Row, Image, ListGroup, Card, Button } from 'react-bootstrap'
+import { Col, Row, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import Rating from '../components/Rating'
@@ -8,7 +8,8 @@ import { productDetails } from '../actions/productActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
-const ProductScreen = ({ match }) => {
+const ProductScreen = ({history, match }) => {
+  const [qty,setQty]=useState(1)
   const dispatch = useDispatch()
   const prodDetails = useSelector(state => state.productDetails)
   const { loading, error, product } = prodDetails
@@ -16,6 +17,11 @@ const ProductScreen = ({ match }) => {
   useEffect(() => {
     dispatch(productDetails(match.params.id))
   }, [dispatch, match])
+
+  const addToCartHandler= () => {
+      history.push(`/cart/${match.params.id}?qty=${qty}`)
+  }
+
   return (
     <>
       <Link className='btn btn-dark my=3' to='/'>
@@ -58,8 +64,24 @@ const ProductScreen = ({ match }) => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
+                {product.countInStock>0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Qty</Col>
+                      <Col><Form.Control as='select' value={qty} onChange={(e)=>(setQty(e.target.value))}>
+                        {[...Array(product.countInStock).keys()].map(x=>(
+                          <option key={x+1} value={x+1}>
+                            {x+1}
+                          </option>
+                        ))}
+                      </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
                 <ListGroup.Item>
                   <Button
+                    onClick={addToCartHandler}
                     className='btn-block'
                     type='button'
                     disabled={!product.countInStock}
