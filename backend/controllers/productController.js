@@ -55,10 +55,13 @@ const updateProduct = asyncHandler(async (req, res) => {
     countInStock,
     numReviews,
   } = req.body
+
   const product = await Product.findById(req.params.id)
+
   if (product) {
     product.name = name
     product.price = price
+    product.image = image
     product.description = description
     product.brand = brand
     product.category = category
@@ -70,7 +73,6 @@ const updateProduct = asyncHandler(async (req, res) => {
     res.status(404)
     throw new Error('Product not found')
   }
-  res.status(201).json(createdProduct)
 })
 
 //exports.getProducts=getProducts
