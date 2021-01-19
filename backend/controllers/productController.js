@@ -49,6 +49,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   const {
     name,
     price,
+    image,
     description,
     brand,
     category,

@@ -26,10 +26,8 @@ app.use('/api/upload', uploadRoutes)
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 )
-
-//const dirname = path.resolve()
-
-app.use('/uploads', express.static(path.join(__dirname, '\\uploads')))
+const _dirname = path.resolve()
+app.use('/uploads', express.static(path.join(_dirname, '/uploads')))
 
 app.use(notFound)
 app.use(errorHandler)
@@ -37,5 +35,5 @@ app.use(errorHandler)
 const PORT = process.env.PORT || 5000
 app.listen(
   PORT,
-  console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)
+  console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}...`)
 )
