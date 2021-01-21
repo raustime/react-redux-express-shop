@@ -1,8 +1,15 @@
 const path = require('path')
+const morgan = require('morgan')
 const express = require('express')
 const dotenv = require('dotenv')
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
+
+dotenv.config()
 const app = express()
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
+
 app.use(express.json())
 
 const connectDb = require('./config/db')
@@ -12,7 +19,6 @@ const orderRoutes = require('./routes/orderRoutes')
 const userRoutes = require('./routes/userRoutes')
 const uploadRoutes = require('./routes/uploadRoutes')
 
-dotenv.config()
 connectDb()
 
 app.get('/', (req, res) => {
