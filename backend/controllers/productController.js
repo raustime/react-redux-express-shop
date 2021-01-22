@@ -2,7 +2,15 @@ const asyncHandler = require('express-async-handler')
 const Product = require('../models/productModel')
 
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({})
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {}
+  const products = await Product.find({ ...keyword })
   // throw new Error('Not Authorized')
   res.json(products)
 })
