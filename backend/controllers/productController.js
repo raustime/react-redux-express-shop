@@ -2,6 +2,8 @@ const asyncHandler = require('express-async-handler')
 const Product = require('../models/productModel')
 
 const getProducts = asyncHandler(async (req, res) => {
+  const pageSize = 10
+  const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword
     ? {
         name: {
@@ -10,8 +12,18 @@ const getProducts = asyncHandler(async (req, res) => {
         },
       }
     : {}
+  const count = await Product.countDocuments({ ...keyword })
   const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
+
   // throw new Error('Not Authorized')
+  res.json({ products, page, pages: Math.ceil(count / pageSize) })
+})
+
+const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+
   res.json(products)
 })
 
@@ -126,4 +138,5 @@ module.exports = {
   createProduct,
   updateProduct,
   createProductReview,
+  getTopProducts,
 }
